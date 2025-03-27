@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  ros2-ydlidar:
+    image: ros2-ydlidar  # Name of the built image
+    container_name: ros2_ydlidar
+    privileged: true
+    network_mode: "host"
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    volumes:
+      - "/dev:/dev"
+      - "/sys:/sys"
+      - "/lib/modules:/lib/modules"
+    environment:
+      - ROS_DOMAIN_ID=0  # Set ROS2 domain (if needed)
+      - DISPLAY=${DISPLAY} # Allow GUI apps like RViz
+    command: ["/bin/bash"]
