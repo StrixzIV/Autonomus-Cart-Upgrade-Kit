@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  ros2-ydlidar:
-    image: ros2-ydlidar  # Name of the built image
-    container_name: ros2_ydlidar
+  ros2-foxy-ACUK:
+    image: ros2-foxy-acuk  # Name of the built image
+    container_name: ros2_foxy_acuk
     privileged: true
     network_mode: "host"
     devices:
