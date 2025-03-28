@@ -9,6 +9,8 @@ RUN apt update && apt install -y \
     ros-humble-slam-toolbox \
     ros-humble-rviz2 \
     git \
+	udev \
+	neovim \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up workspace
@@ -36,6 +38,11 @@ RUN . /opt/ros/humble/setup.sh \
 # Source ROS 2 and workspace automatically
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc \
     && echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
+
+RUN chmod +x src/ydlidar_ros2_driver-master/startup/*
+RUN sudo sh src/ydlidar_ros2_driver-master/startup/initenv.sh
+
+COPY ./params/ydlidar_x3.yaml src/ydlidar_ros2_driver-master/params
 
 # Default command: start a bash shell
 CMD ["/bin/bash", "-c", "while true; do sleep 3600; done"]
