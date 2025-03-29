@@ -1,0 +1,14 @@
+# Wheel Odometry Parameters
+
+encoder_publisher_node:
+  ros__parameters:
+    left_encoder_pin: 17
+    right_encoder_pin: 18
+    publish_rate: 10.0
+
+encoder_odometry_node:
+  ros__parameters:
+    wheel_diameter: 0.127  # 5 inches in meters
+    encoder_resolution: 16  # 16 holes per revolution
+    wheel_separation: 0.3   # Distance between wheels
+    publish_rate: 10.0      # Publishing rate in Hz
