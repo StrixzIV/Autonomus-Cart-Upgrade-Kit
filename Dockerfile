@@ -45,6 +45,8 @@ RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc \
 RUN chmod +x src/ydlidar_ros2_driver-master/startup/*
 RUN sudo sh src/ydlidar_ros2_driver-master/startup/initenv.sh
 
+RUN mv src/Makefile .
+
 COPY ./params/ydlidar_x3.yaml src/ydlidar_ros2_driver-master/params
 
 # Default command: start a bash shell
