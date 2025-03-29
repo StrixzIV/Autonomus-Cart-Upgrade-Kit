@@ -6,12 +6,15 @@ ros-image:
 up:
 	docker-compose up -d
 
-down:
-	docker-compose down
-
 terminal:
 	docker exec -it ros2_humble_acuk bash
 
+clean:
+	docker-compose down
+	docker system prune -f
+
 restart: down up
 
-re: down all up
+re: clean all
+
+.PHONY: all ros-image up down terminal down restart re
