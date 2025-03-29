@@ -5,21 +5,27 @@ RUN apt update && apt install -y \
 	pkg-config \
 	swig \
 	python3-pip \
-    python3-colcon-common-extensions \
-    ros-humble-slam-toolbox \
-    ros-humble-rviz2 \
-    git \
+	python3-colcon-common-extensions \
+	ros-humble-slam-toolbox \
+	ros-humble-rviz2 \
+	git \
 	udev \
 	neovim \
+	libxcb-xinerama0 \
+	libxcb-cursor0 \
+	libgl1-mesa-glx \
+	libgl1-mesa-dev \
+	python3-rpi.gpio \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install RPi.GPIO
 
 # Set up workspace
 WORKDIR /ros2_ws
 
-RUN mkdir -p src
+COPY src /ros2_ws/src/
 
 RUN cd src \
-    && git clone https://github.com/YDLIDAR/YDLidar-SDK.git \
     && cd YDLidar-SDK \
     && mkdir build \
     && cd build \
@@ -27,10 +33,7 @@ RUN cd src \
     && make \
     && make install
 
-RUN cd src \
-    && git clone https://github.com/Oyefusi-Samuel/ydlidar_ros2_driver-master.git
-
-# # Build the workspace
+# Build the workspace
 RUN . /opt/ros/humble/setup.sh \
     && cd /ros2_ws \
     && colcon build --symlink-install

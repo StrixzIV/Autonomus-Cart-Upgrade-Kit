@@ -11,7 +11,11 @@ services:
       - "/dev:/dev"
       - "/sys:/sys"
       - "/lib/modules:/lib/modules"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "${HOME}/.Xauthority:/root/.Xauthority"
     environment:
-      - ROS_DOMAIN_ID=0  # Set ROS2 domain (if needed)
-      - DISPLAY=${DISPLAY} # Allow GUI apps like RViz
+      - ROS_DOMAIN_ID=0
+      - DISPLAY=:0
+      - QT_X11_NO_MITSHM=1
+      - XDG_RUNTIME_DIR=/tmp
     command: ["bash", "-c", "tail -f /dev/null"]
