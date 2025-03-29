@@ -38,10 +38,14 @@ class EncoderPublisher(Node):
         self.right_pub = self.create_publisher(Int32, 'right_encoder_ticks', 10)
         
         # Set up GPIO event detection
-        GPIO.add_event_detect(self.left_encoder_pin, GPIO.RISING, 
-                              callback=self.left_encoder_callback, bouncetime=5)
-        GPIO.add_event_detect(self.right_encoder_pin, GPIO.RISING, 
-                              callback=self.right_encoder_callback, bouncetime=5)
+        try:
+            GPIO.add_event_detect(self.left_encoder_pin, GPIO.RISING,
+                                callback=self.left_encoder_callback, bouncetime=5)
+            GPIO.add_event_detect(self.right_encoder_pin, GPIO.RISING,
+                                callback=self.right_encoder_callback, bouncetime=5)
+        except RuntimeError as e:
+            self.get_logger().warning(f"Failed to set up GPIO event detection: {e}")
+            self.get_logger().warning("Continuing without encoder hardware interrupts")
         
         # Timer for publishing encoder counts
         self.timer = self.create_timer(1.0/publish_rate, self.publish_encoder_counts)
